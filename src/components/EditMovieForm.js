@@ -5,9 +5,15 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const EditMovieForm = (props) => {
+ 
   const navigate = useNavigate();
-
+  const { id } = useParams();
+console.log(id)
   const { setMovies } = props;
+
+  
+  
+  
   const [movie, setMovie] = useState({
     title: "",
     director: "",
@@ -22,12 +28,21 @@ const EditMovieForm = (props) => {
       [e.target.name]: e.target.value
     });
   }
+  useEffect(() => {
+    axios.get(`http://localhost:9000/api/movies/${id}`)
+      .then(res => {
+       setMovie(res.data);
+      })
+      .catch(err => {
+        console.log(err.response);
+      })
+  }, [id]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.put(`http://localhost:9000/api/movies/${id}`, movie)
       .then(res => {
-        setMovies(res.data);
+        setMovies(res.data)
         navigate(`/movies/${movie.id}`);
       })
       .catch(err => {
