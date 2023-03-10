@@ -15,28 +15,28 @@ const AddMovie = (props) => {
         genre: "",
         metascore: 0,
         description: ""
-      });
+    });
 
-      const handleChange = (e) => {
+    const handleChange = (e) => {
         setMovie({
-          ...movie,
-          [e.target.name]: e.target.value
+            ...movie,
+            [e.target.name]: e.target.value
         });
-      }
+    }
 
-      const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-            axios.post(baseURL, movie)
-              .then(res => {
+        axios.post(baseURL, movie)
+            .then(res => {
                 setMovies(res.data)
-               navigate('/movies');
-              })
-              .catch(err => {
+                navigate('/movies');
+            })
+            .catch(err => {
                 console.log(err.response);
-              })
-          };
-       
-      
+            })
+    };
+
+
 
     return (
         <div>
@@ -47,29 +47,68 @@ const AddMovie = (props) => {
                 <div className="modal-body">
                     <div className="form-group">
                         <label>Title</label>
-                        <input value={movie.title} onChange={handleChange} name="title" type="text" className="form-control" />
+                        <input
+                            value={movie.title}
+                            onChange={handleChange}
+                            name="title"
+                            type="text"
+                            className="form-control"
+                        />
                     </div>
                     <div className="form-group">
                         <label>Director</label>
-                        <input value={movie.director} onChange={handleChange} name="director" type="text" className="form-control" />
+                        <input
+                            value={movie.director}
+                            onChange={handleChange}
+                            name="director"
+                            type="text"
+                            className="form-control"
+                        />
                     </div>
                     <div className="form-group">
                         <label>Genre</label>
-                        <input value={movie.genre} onChange={handleChange} name="genre" type="text" className="form-control" />
+                        <input
+                            value={movie.genre}
+                            onChange={handleChange}
+                            name="genre"
+                            type="text"
+                            className="form-control"
+                        />
                     </div>
                     <div className="form-group">
                         <label>Metascore</label>
-                        <input value={movie.metascore} onChange={handleChange} name="metascore" type="number" className="form-control" />
+                        <input
+                            value={movie.metascore}
+                            onChange={handleChange}
+                            name="metascore"
+                            type="number"
+                            className="form-control" />
                     </div>
                     <div className="form-group">
                         <label>Description</label>
-                        <textarea value={movie.description} onChange={handleChange} name="description" className="form-control"></textarea>
+                        <textarea
+                            value={movie.description}
+                            onChange={handleChange}
+                            name="description"
+                            className="form-control">
+                        </textarea>
                     </div>
 
                 </div>
                 <div className="modal-footer">
-                    <input type="submit" className="btn btn-info" value="Save" />
-                    <Link to={`/movies/1`}><input type="button" className="btn btn-default" value="Cancel" /></Link>
+                    <input
+                        type="submit"
+                        className="btn btn-info"
+                        value="Save"
+                    />
+                    <Link
+                        to={`/movies/1`}>
+                        <input
+                            type="button"
+                            className="btn btn-default"
+                            value="Cancel"
+                        />
+                    </Link>
                 </div>
             </form>
         </div>

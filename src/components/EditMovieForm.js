@@ -51,7 +51,7 @@ const EditMovieForm = (props) => {
       })
   }
 
-  
+
   const { title, director, genre, metascore, description } = movie;
 
   return (
@@ -121,7 +121,8 @@ const EditMovieForm = (props) => {
               <input
                 type="button"
                 className="btn btn-default"
-                value="Cancel" />
+                value="Cancel"
+              />
             </Link>
           </div>
         </form>

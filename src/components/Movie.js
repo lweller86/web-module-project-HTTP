@@ -5,12 +5,13 @@ import axios from 'axios';
 import { baseURL } from '../Utils';
 
 const Movie = (props) => {
+
   const { addToFavorites, deleteMovie } = props;
-
   const [movie, setMovie] = useState('');
-
   const { id } = useParams();
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
     axios.get(`${baseURL}/${id}`)
@@ -22,6 +23,7 @@ const Movie = (props) => {
       })
   }, [id]);
 
+
   const onDeleteClick = () => {
     axios.delete(`${baseURL}/${id}`)
       .then(res => {
@@ -32,9 +34,6 @@ const Movie = (props) => {
         console.log(err.response);
       });
   }
-
- 
-
 
 
   return (<div className="modal-page col">
@@ -48,27 +47,61 @@ const Movie = (props) => {
 
             <section className="movie-details">
               <div>
-                <label>Title: <strong>{movie.title}</strong></label>
+                <label>Title:
+                  <strong>
+                    {movie.title}
+                  </strong>
+                </label>
               </div>
               <div>
-                <label>Director: <strong>{movie.director}</strong></label>
+                <label>Director:
+                  <strong>
+                    {movie.director}
+                  </strong>
+                </label>
               </div>
               <div>
-                <label>Genre: <strong>{movie.genre}</strong></label>
+                <label>Genre:
+                  <strong>
+                    {movie.genre}
+                  </strong>
+                </label>
               </div>
               <div>
-                <label>Metascore: <strong>{movie.metascore}</strong></label>
+                <label>Metascore:
+                  <strong>
+                    {movie.metascore}
+                  </strong>
+                </label>
               </div>
               <div>
                 <label>Description:</label>
-                <p><strong>{movie.description}</strong></p>
+                <p>
+                  <strong>
+                    {movie.description}
+                  </strong>
+                </p>
               </div>
             </section>
 
             <section>
-              <span onClick={() => addToFavorites(movie) } className="m-2 btn btn-dark">Favorite</span>
-              <Link to={`/movies/edit/${movie.id}`} className="m-2 btn btn-success">Edit</Link>
-              <span className="delete"><input type="button" onClick={onDeleteClick} className="m-2 btn btn-danger" value="Delete" /></span>
+              <span onClick={() => addToFavorites(movie)}
+                className="m-2 btn btn-dark">
+                Favorite
+              </span>
+              <Link
+                to={`/movies/edit/${movie.id}`}
+                className="m-2 btn btn-success">
+                Edit
+              </Link>
+              <span
+                className="delete">
+                <input
+                  type="button"
+                  onClick={onDeleteClick}
+                  className="m-2 btn btn-danger"
+                  value="Delete" />
+              </span>
             </section>
           </div>
         </div>
