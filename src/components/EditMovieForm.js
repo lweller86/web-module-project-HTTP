@@ -3,16 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import axios from 'axios';
+import { baseURL } from '../Utils';
 
 const EditMovieForm = (props) => {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  
   const { setMovies } = props;
-
-
-
 
   const [movie, setMovie] = useState({
     title: "",
@@ -22,14 +19,17 @@ const EditMovieForm = (props) => {
     description: ""
   });
 
+
   const handleChange = (e) => {
     setMovie({
       ...movie,
       [e.target.name]: e.target.value
     });
   }
+
+
   useEffect(() => {
-    axios.get(`http://localhost:9000/api/movies/${id}`)
+    axios.get(`${baseURL}/${id}`)
       .then(res => {
         setMovie(res.data);
       })
@@ -38,9 +38,10 @@ const EditMovieForm = (props) => {
       })
   }, [id]);
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:9000/api/movies/${id}`, movie)
+    axios.put(`${baseURL}/${id}`, movie)
       .then(res => {
         setMovies(res.data)
         navigate(`/movies/${movie.id}`);
@@ -50,6 +51,7 @@ const EditMovieForm = (props) => {
       })
   }
 
+  
   const { title, director, genre, metascore, description } = movie;
 
   return (
@@ -62,29 +64,65 @@ const EditMovieForm = (props) => {
           <div className="modal-body">
             <div className="form-group">
               <label>Title</label>
-              <input value={title} onChange={handleChange} name="title" type="text" className="form-control" />
+              <input
+                value={title}
+                onChange={handleChange}
+                name="title"
+                type="text"
+                className="form-control"
+              />
             </div>
             <div className="form-group">
               <label>Director</label>
-              <input value={director} onChange={handleChange} name="director" type="text" className="form-control" />
+              <input
+                value={director}
+                onChange={handleChange}
+                name="director"
+                type="text"
+                className="form-control" />
             </div>
             <div className="form-group">
               <label>Genre</label>
-              <input value={genre} onChange={handleChange} name="genre" type="text" className="form-control" />
+              <input
+                value={genre}
+                onChange={handleChange}
+                name="genre"
+                type="text"
+                className="form-control" />
             </div>
             <div className="form-group">
               <label>Metascore</label>
-              <input value={metascore} onChange={handleChange} name="metascore" type="number" className="form-control" />
+              <input
+                value={metascore}
+                onChange={handleChange}
+                name="metascore"
+                type="number"
+                className="form-control" />
             </div>
             <div className="form-group">
               <label>Description</label>
-              <textarea value={description} onChange={handleChange} name="description" className="form-control"></textarea>
+              <textarea
+                value={description}
+                onChange={handleChange}
+                name="description"
+                className="form-control">
+              </textarea>
             </div>
 
           </div>
           <div className="modal-footer">
-            <input type="submit" className="btn btn-info" value="Save" />
-            <Link to={`/movies/1`}><input type="button" className="btn btn-default" value="Cancel" /></Link>
+            <input
+              type="submit"
+              className="btn btn-info"
+              value="Save" />
+
+            <Link
+              to={`/movies/1`}>
+              <input
+                type="button"
+                className="btn btn-default"
+                value="Cancel" />
+            </Link>
           </div>
         </form>
       </div>

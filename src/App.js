@@ -11,13 +11,16 @@ import FavoriteMovieList from './components/FavoriteMovieList';
 
 import axios from 'axios';
 import EditMovieForm from "./components/EditMovieForm";
+import { baseURL } from "./Utils";
 
 const App = (props) => {
   const [movies, setMovies] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
+
+  console.log(favoriteMovies)
   useEffect(() => {
-    axios.get('http://localhost:9000/api/movies')
+    axios.get(baseURL)
       .then(res => {
         setMovies(res.data);
       })
@@ -27,13 +30,14 @@ const App = (props) => {
   }, []);
 
   const deleteMovie = (id) => {
-    console.log(id)
-    setMovies(movies.filter(item=>(item.id !== id)));
-    
+
+    setMovies(movies.filter(item => (item.id !== id)));
+
   }
 
-  const addToFavorites = (movie) => {
-
+  const addToFavorites = (favoriteMovie) => {
+    const findMovie = (favoriteMovies.find(item => favoriteMovie.id === item.id));
+    if (!findMovie) setFavoriteMovies([...favoriteMovies, favoriteMovie]);
   }
 
   return (
@@ -48,15 +52,33 @@ const App = (props) => {
           <FavoriteMovieList favoriteMovies={favoriteMovies} />
 
           <Routes>
-            <Route path="movies/edit/:id" element={<EditMovieForm setMovies={setMovies} />}/>
+            <Route
+              path="movies/edit/:id"
+              element={<EditMovieForm
+                setMovies={setMovies} />}
+            />
 
-            <Route path="movies/:id" element={<Movie deleteMovie={deleteMovie} addToFavorites={addToFavorites}/>} />
+            <Route
+              path="movies/:id"
+              element={<Movie deleteMovie={deleteMovie}
+                addToFavorites={addToFavorites} />}
+            />
 
-            <Route path="movies" element={<MovieList movies={movies} />} />
+            <Route
+              path="movies"
+              element={<MovieList movies={movies} />}
+            />
 
-            <Route path="movies/add" element={<AddMovie movies={movies} setMovies={setMovies}/>} />
+            <Route
+              path="movies/add"
+              element={<AddMovie movies={movies} setMovies={setMovies} />}
+            />
 
-            <Route path="/" element={<Navigate to="/movies" />} />
+            <Route
+              path="/"
+              element={<Navigate to="/movies" />}
+            />
+
           </Routes>
         </div>
       </div>
